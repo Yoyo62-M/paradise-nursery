@@ -1,7 +1,6 @@
-// src/components/CartItem.jsx
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { removeItem, increaseQuantity, decreaseQuantity, clearCart } from '../CartSlice';
+import { removeItem, updateQuantity } from '../CartSlice';
 
 function CartItem({ onContinue }) {
   const dispatch = useDispatch();
@@ -10,13 +9,24 @@ function CartItem({ onContinue }) {
   const totalCost = cartItems.reduce((sum, i) => sum + i.price * i.quantity, 0);
   const totalItems = cartItems.reduce((sum, i) => sum + i.quantity, 0);
 
+  const handleIncrease = (item) => {
+    dispatch(updateQuantity({ id: item.id, quantity: item.quantity + 1 }));
+  };
+
+  const handleDecrease = (item) => {
+    if (item.quantity > 1) {
+      dispatch(updateQuantity({ id: item.id, quantity: item.quantity - 1 }));
+    } else {
+      dispatch(removeItem(item.id));
+    }
+  };
+
   const handleCheckout = () => {
     alert('Coming Soon! 🌿 Thank you for shopping at Paradise Nursery.');
   };
 
   return (
     <div>
-      {/* Navbar */}
       <nav style={styles.nav}>
         <span style={styles.brand}>🌿 Paradise Nursery</span>
         <div style={styles.navLinks}>
@@ -49,15 +59,16 @@ function CartItem({ onContinue }) {
                   </p>
                 </div>
                 <div style={styles.qtyControl}>
-                  <button onClick={() => dispatch(decreaseQuantity(item.id))} style={styles.qtyBtn}>−</button>
+                  <button onClick={() => handleDecrease(item)} style={styles.qtyBtn}>−</button>
                   <span style={{ margin: '0 12px', fontSize: '1.1rem' }}>{item.quantity}</span>
-                  <button onClick={() => dispatch(increaseQuantity(item.id))} style={styles.qtyBtn}>+</button>
+                  <button onClick={() => handleIncrease(item)} style={styles.qtyBtn}>+</button>
                 </div>
-                <button onClick={() => dispatch(removeItem(item.id))} style={styles.deleteBtn}>🗑 Delete</button>
+                <button onClick={() => dispatch(removeItem(item.id))} style={styles.deleteBtn}>
+                  🗑 Delete
+                </button>
               </div>
             ))}
 
-            {/* Cart Summary */}
             <div style={styles.summary}>
               <h3>Total Amount: <span style={{ color: '#2d5a27' }}>${totalCost.toFixed(2)}</span></h3>
               <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>

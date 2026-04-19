@@ -1,19 +1,20 @@
-// src/components/AboutUs.jsx
 import React from 'react';
+import './AboutUs.css';
 
 function AboutUs() {
   return (
-    <div style={{ padding: '40px', maxWidth: '800px', margin: '0 auto' }}>
-      <h2>About Paradise Nursery</h2>
+    <div className="about-us-container">
+      <h2>Welcome to Paradise Nursery</h2>
       <p>
-        Welcome to Paradise Nursery — your go-to destination for beautiful,
-        healthy houseplants. Founded in 2020, we bring nature indoors with
-        carefully curated plants for every home and lifestyle.
+        At Paradise Nursery, we are passionate about bringing the beauty 
+        of nature into your home. Founded in 2020, our mission is to 
+        provide high-quality, healthy houseplants to plant lovers everywhere.
       </p>
       <p>
-        Our mission is to make plant ownership accessible, joyful, and
-        sustainable. Whether you're a seasoned plant parent or just starting
-        your green journey, we have the perfect plant for you.
+        Whether you're looking for air-purifying plants, low-maintenance 
+        greens, or beautiful flowering plants, we have something for everyone.
+        Our team of plant experts carefully selects each plant to ensure 
+        you receive only the best.
       </p>
     </div>
   );
