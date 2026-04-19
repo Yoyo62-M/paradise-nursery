@@ -17,12 +17,21 @@ function CartItem({ onContinue }) {
     if (item.quantity > 1) {
       dispatch(updateQuantity({ id: item.id, quantity: item.quantity - 1 }));
     } else {
-      dispatch(removeItem(item.id));
+      handleDelete(item.id);
     }
   };
 
+  const handleDelete = (id) => {
+    dispatch(removeItem(id));
+  };
+
   const handleCheckout = () => {
-    alert('Coming Soon! 🌿 Thank you for shopping at Paradise Nursery.');
+    alert(
+      'Coming Soon! 🌿\n\n' +
+      'Thank you for shopping at Paradise Nursery!\n' +
+      'Your order of ' + totalItems + ' item(s) totaling $' + totalCost.toFixed(2) + ' will be processed soon.\n\n' +
+      'We appreciate your business!'
+    );
   };
 
   return (
@@ -53,7 +62,9 @@ function CartItem({ onContinue }) {
                 <img src={item.image} alt={item.name} style={styles.img} />
                 <div style={styles.details}>
                   <h3 style={{ margin: '0 0 5px' }}>{item.name}</h3>
-                  <p style={{ color: '#666', margin: 0 }}>Unit Price: ${item.price.toFixed(2)}</p>
+                  <p style={{ color: '#666', margin: 0 }}>
+                    Unit Price: ${item.price.toFixed(2)}
+                  </p>
                   <p style={{ fontWeight: 'bold', color: '#2d5a27' }}>
                     Total: ${(item.price * item.quantity).toFixed(2)}
                   </p>
@@ -63,7 +74,7 @@ function CartItem({ onContinue }) {
                   <span style={{ margin: '0 12px', fontSize: '1.1rem' }}>{item.quantity}</span>
                   <button onClick={() => handleIncrease(item)} style={styles.qtyBtn}>+</button>
                 </div>
-                <button onClick={() => dispatch(removeItem(item.id))} style={styles.deleteBtn}>
+                <button onClick={() => handleDelete(item.id)} style={styles.deleteBtn}>
                   🗑 Delete
                 </button>
               </div>
@@ -72,8 +83,12 @@ function CartItem({ onContinue }) {
             <div style={styles.summary}>
               <h3>Total Amount: <span style={{ color: '#2d5a27' }}>${totalCost.toFixed(2)}</span></h3>
               <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
-                <button onClick={onContinue} style={styles.continueBtn}>← Continue Shopping</button>
-                <button onClick={handleCheckout} style={styles.checkoutBtn}>Checkout</button>
+                <button onClick={onContinue} style={styles.continueBtn}>
+                  ← Continue Shopping
+                </button>
+                <button onClick={handleCheckout} style={styles.checkoutBtn}>
+                  Checkout
+                </button>
               </div>
             </div>
           </>
